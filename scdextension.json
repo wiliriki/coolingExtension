@@ -1,7 +1,7 @@
 {
   "type": "CityJSONExtension",
   "name": "Energy",
-  "uri": "http://example.com/schemas/cooling-extension.schema.json",
+  "uri": "https://github.com/wiliriki/coolingExtension/blob/main/scdextension.json",
   "version": "1.1.0",
   "VersionCityJSON": "2.0",
   "description": "Comprehensive schema for building cooling system and thermal performance analysis",
