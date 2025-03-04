@@ -1,0 +1,353 @@
+{
+  "type": "CityJSONExtension",
+  "name": "CoolingEnergy",
+  "description": "Extension to model cooling demand, OTTV and related cooling energy parameters",
+  "url": "https://raw.githubusercontent.com/cityjson/schema/master/cityjson-schema.json",
+  "version": "1.0",
+  "versionCityJSON": "2.0",
+  
+  "extraRootProperties": {
+    "+cooling-unitOfMeasurement": {
+      "type": "object",
+      "properties": {
+        "cooling-volume": {
+          "type": "string",
+          "enum": ["m^3", "feet^3"]
+        },
+        "cooling-floorArea": {
+          "type": "string",
+          "enum": ["m^2", "feet^2"]
+        },
+        "cooling-temperature": {
+          "type": "string",
+          "enum": ["°C", "°F", "K"]
+        },
+        "cooling-energyDemand": {
+          "type": "string",
+          "enum": ["kWh", "MJ", "GJ"]
+        },
+        "cooling-OTTV": {
+          "type": "string",
+          "enum": ["W/m^2", "Btu/(h·ft^2)"]
+        },
+        "cooling-thermalTransmittance": {
+          "type": "string",
+          "enum": ["W/(m^2K)", "Btu/(h·ft^2·°F)"]
+        }
+      }
+    }
+  },
+  
+  "extraAttributes": {
+    "Building": {
+      "+cooling-buildingType": {
+        "type": "string",
+        "enum": ["residential", "office", "commercial", "hotel", "hospital", "educational", "industrial"]
+      },
+      "+cooling-constructionYear": {
+        "type": "integer"
+      },
+      "+cooling-volume": {
+        "type": "number"
+      },
+      "+cooling-floorArea": {
+        "type": "number"
+      },
+      "+cooling-storeys": {
+        "type": "integer"
+      },
+      "+cooling-weatherData": {
+        "$ref": "#/definitions/WeatherData"
+      },
+      "+cooling-coolingDemand": {
+        "$ref": "#/definitions/CoolingDemand"
+      },
+      "+cooling-OTTV": {
+        "$ref": "#/definitions/OTTVValues"
+      }
+    },
+    "BuildingPart": {
+      "+cooling-buildingType": {
+        "type": "string",
+        "enum": ["residential", "office", "commercial", "hotel", "hospital", "educational", "industrial"]
+      },
+      "+cooling-constructionYear": {
+        "type": "integer"
+      },
+      "+cooling-volume": {
+        "type": "number"
+      },
+      "+cooling-floorArea": {
+        "type": "number"
+      },
+      "+cooling-storeys": {
+        "type": "integer"
+      },
+      "+cooling-weatherData": {
+        "$ref": "#/definitions/WeatherData"
+      },
+      "+cooling-coolingDemand": {
+        "$ref": "#/definitions/CoolingDemand"
+      },
+      "+cooling-OTTV": {
+        "$ref": "#/definitions/OTTVValues"
+      }
+    }
+  },
+  
+  "extraCityObjects": {
+    "+CoolingZone": {
+      "allOf": [
+        {
+          "$ref": "cityobjects.json#/_AbstractCityObject"
+        },
+        {
+          "properties": {
+            "type": {
+              "enum": ["+CoolingZone"]
+            },
+            "attributes": {
+              "properties": {
+                "+cooling-volume": {
+                  "type": "number"
+                },
+                "+cooling-floorArea": {
+                  "type": "number"
+                },
+                "+cooling-isCooled": {
+                  "type": "boolean"
+                },
+                "+cooling-setPointTemperature": {
+                  "type": "number"
+                },
+                "+cooling-occupants": {
+                  "type": "integer"
+                },
+                "+cooling-internalGains": {
+                  "type": "number"
+                },
+                "+cooling-designCoolingLoad": {
+                  "type": "number"
+                }
+              }
+            },
+            "parents": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": ["type", "parents"]
+        }
+      ]
+    },
+    "+CoolingBoundary": {
+      "allOf": [
+        {
+          "$ref": "cityobjects.json#/_AbstractCityObject"
+        },
+        {
+          "properties": {
+            "type": {
+              "enum": ["+CoolingBoundary"]
+            },
+            "attributes": {
+              "properties": {
+                "+cooling-boundaryType": {
+                  "type": "string",
+                  "enum": ["externalWall", "roof", "floor", "partition", "glazing"]
+                },
+                "+cooling-area": {
+                  "type": "number"
+                },
+                "+cooling-orientation": {
+                  "type": "number"
+                },
+                "+cooling-uValue": {
+                  "type": "number"
+                },
+                "+cooling-shgc": {
+                  "type": "number"
+                },
+                "+cooling-shadingCoefficient": {
+                  "type": "number"
+                },
+                "+cooling-windowWallRatio": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              }
+            },
+            "parents": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": ["type", "parents"]
+        }
+      ]
+    },
+    "+CoolingSystem": {
+      "allOf": [
+        {
+          "$ref": "cityobjects.json#/_AbstractCityObject"
+        },
+        {
+          "properties": {
+            "type": {
+              "enum": ["+CoolingSystem"]
+            },
+            "attributes": {
+              "properties": {
+                "+cooling-systemType": {
+                  "type": "string",
+                  "enum": ["centralAC", "splitUnit", "VRF", "chiller", "evaporativeCooling"]
+                },
+                "+cooling-coolingCapacity": {
+                  "type": "number"
+                },
+                "+cooling-EER": {
+                  "type": "number"
+                },
+                "+cooling-SEER": {
+                  "type": "number"
+                }
+              }
+            },
+            "parents": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": ["type", "parents"]
+        }
+      ]
+    }
+  },
+  
+  "extraSemanticSurfaces": {
+    "+CoolingSurface": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": ["+CoolingSurface"]
+        },
+        "+cooling-uValue": {
+          "type": "number"
+        },
+        "+cooling-solarAbsorptance": {
+          "type": "number"
+        },
+        "+cooling-thermalMass": {
+          "type": "number"
+        }
+      },
+      "required": ["type"]
+    }
+  },
+  
+  "definitions": {
+    "WeatherData": {
+      "type": "object",
+      "properties": {
+        "weatherElement": {
+          "type": "string",
+          "enum": ["dryBulbTemperature", "wetBulbTemperature", "relativeHumidity", "solarRadiation"]
+        },
+        "weatherDataLocation": {
+          "type": "string",
+          "enum": ["indoor", "outdoor"]
+        },
+        "values": {
+          "type": "object",
+          "properties": {
+            "january": {"type": "number"},
+            "february": {"type": "number"},
+            "march": {"type": "number"},
+            "april": {"type": "number"},
+            "may": {"type": "number"},
+            "june": {"type": "number"},
+            "july": {"type": "number"},
+            "august": {"type": "number"},
+            "september": {"type": "number"},
+            "october": {"type": "number"},
+            "november": {"type": "number"},
+            "december": {"type": "number"}
+          }
+        },
+        "designDay": {
+          "type": "object",
+          "properties": {
+            "temperature": {"type": "number"},
+            "humidity": {"type": "number"},
+            "date": {"type": "string", "format": "date"}
+          }
+        }
+      }
+    },
+    "CoolingDemand": {
+      "type": "object",
+      "properties": {
+        "endUse": {
+          "type": "string",
+          "enum": ["spaceCooling", "dehumidification", "ventilation"]
+        },
+        "values": {
+          "type": "object",
+          "properties": {
+            "january": {"type": "number"},
+            "february": {"type": "number"},
+            "march": {"type": "number"},
+            "april": {"type": "number"},
+            "may": {"type": "number"},
+            "june": {"type": "number"},
+            "july": {"type": "number"},
+            "august": {"type": "number"},
+            "september": {"type": "number"},
+            "october": {"type": "number"},
+            "november": {"type": "number"},
+            "december": {"type": "number"},
+            "annual": {"type": "number"},
+            "peakLoad": {"type": "number"}
+          }
+        }
+      }
+    },
+    "OTTVValues": {
+      "type": "object",
+      "properties": {
+        "overallValue": {
+          "type": "number"
+        },
+        "northFacade": {
+          "type": "number"
+        },
+        "eastFacade": {
+          "type": "number"
+        },
+        "southFacade": {
+          "type": "number"
+        },
+        "westFacade": {
+          "type": "number"
+        },
+        "roof": {
+          "type": "number"
+        },
+        "complianceStatus": {
+          "type": "string",
+          "enum": ["compliant", "nonCompliant"]
+        },
+        "referenceStandard": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
