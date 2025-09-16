@@ -2,7 +2,7 @@
   "type": "CityJSONExtension",
   "name": "Cooling",
   "description": "Extension to require cooling energy demand attributes (OTTV + ACM) for BuildingRoom objects.",
-  "url": "https://raw.githubusercontent.com/wiliriki/CoolingEnergyDemand/refs/heads/main/CoolingEnergyDemand.ext.json",
+  "url": "https://raw.githubusercontent.com/wiliriki/coolingExtension/refs/heads/main/Cooling.ext.json",
   "version": "1.0",
   "versionCityJSON": "2.0",
   "extraAttributes": {
@@ -37,5 +37,6 @@
   "extraRootProperties": {},
   "extraSemanticSurfaces": {}
 }
+
 
 
