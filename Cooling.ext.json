@@ -1,0 +1,41 @@
+{
+  "type": "CityJSONExtension",
+  "name": "Cooling",
+  "description": "Extension to require cooling energy demand attributes (OTTV + ACM) for BuildingRoom objects.",
+  "url": "https://raw.githubusercontent.com/wiliriki/CoolingEnergyDemand/refs/heads/main/CoolingEnergyDemand.ext.json",
+  "version": "1.0",
+  "versionCityJSON": "2.0",
+  "extraAttributes": {
+    "BuildingRoom": {
+      "type": "object",
+      "properties": {
+        "+qheatload_total_w": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Total cooling load (W)"
+        },
+        "+ottv_total_w": {
+          "type": "number",
+          "minimum": 0,
+          "description": "OTTV component (W)"
+        },
+        "+acm_w": {
+          "type": "number",
+          "minimum": 0,
+          "description": "ACM component (W)"
+        }
+      },
+      "required": [
+        "+qheatload_total_w",
+        "+ottv_total_w",
+        "+acm_w"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "extraCityObjects": {},
+  "extraRootProperties": {},
+  "extraSemanticSurfaces": {}
+}
+
+
